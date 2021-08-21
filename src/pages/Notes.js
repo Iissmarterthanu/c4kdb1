@@ -17,7 +17,10 @@ export default function Notes() {
   console.log("notes");
   return (
     <Container>
-      <h3>Collars For Kings Database</h3>
+      <Typography variant="h3" color="textPrimary"> Collars For Kings Database</Typography>
+      <Typography variant="p" color="textPrimary"> Version 2 - resize images</Typography>
+      <p/>
+      <Typography variant="p" color="textPrimary"> Version 3 - remove images</Typography>
     </Container>
   )
 }

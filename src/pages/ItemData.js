@@ -302,7 +302,7 @@ export default function ItemData({ products, items, setItems }) {
 
 
         <div>
-          <ImageGrid images={images} />
+          <ImageGrid images={images} setImages={setImages} />
         </div>
 
         <br/>
