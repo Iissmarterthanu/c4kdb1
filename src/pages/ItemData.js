@@ -26,6 +26,7 @@ import Select from '@material-ui/core/Select';
 import Paper from '@material-ui/core/Paper';
 import ProgressBar from './ProgressBar';
 import ImageGrid from './ImageGrid';
+import Resizer from "react-image-file-resizer";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -147,8 +148,8 @@ export default function ItemData({ products, items, setItems }) {
 
   const types = ['image/png', 'image/jpeg'];
 
-  const handleAddPic = (e) => {
-    let selected = e.target.files[0];
+  const handleAddPic = async (e) => {
+    const selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
       setFile(selected);
       setFileError('');
@@ -159,7 +160,6 @@ export default function ItemData({ products, items, setItems }) {
   };
   
   
-  function addImages(item) {}
   function preview(item) {}
   
   let i=1;
@@ -286,10 +286,10 @@ export default function ItemData({ products, items, setItems }) {
           error={stockError}
         />
 
-          <label>
-            <input type="file" onChange={handleAddPic} />
-            <span><AddAPhotoIcon /></span>
-          </label>
+        <label>
+          <input type="file" onChange={handleAddPic} />
+          <span><AddAPhotoIcon /></span>
+        </label>
 
         <div className="output">
           { fileError && <div className="error">{ fileError }</div>}

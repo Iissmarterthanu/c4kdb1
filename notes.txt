@@ -7,6 +7,7 @@ background-color: #e2d8b8;
 
 npm install @material-ui/core
 npm install firebase
+npm i react-image-file-resizer
 
 Dev world - CRUD react firebase
 https://www.youtube.com/playlist?list=PLpPVLI0A0OkJ-bu1zSiknRYEUIy33gCwp
@@ -27,3 +28,8 @@ https://www.npmjs.com/package/react-firebase-file-uploader
 
 reference
 https://benmcmahen.com/using-firebase-with-react-hooks/
+
+image resizer:
+react-image-file-resizer - npm
+https://casperleerink.medium.com/react-firebase-resize-image-on-client-side-for-free-50c45a9cbc34
+https://www.youtube.com/watch?v=bXf_UdyDzSA
