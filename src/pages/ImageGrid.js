@@ -7,10 +7,10 @@ const ImageGrid = ({ images, setImages }) => {
   let i = 1234;
 
   function removeImage(image) {
-    console.log(images);
-    console.log(image);
+    // console.log(images);
+    // console.log(image);
     const filteredImages = images.filter((img)=> image !== img );
-    console.log(filteredImages);
+    // console.log(filteredImages);
     setImages(filteredImages);
   }
 
