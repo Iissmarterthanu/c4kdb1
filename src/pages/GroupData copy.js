@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import { 
   Container, 
   Table, 
@@ -17,8 +16,6 @@ import {
   TextField } from '@material-ui/core';
 import { projectFirestore } from '../config/firebaseConfig';
 import Paper from '@material-ui/core/Paper';
-import ProgressBar from './ProgressBar';
-import ImageGrid from './ImageGrid';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -34,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
   gcBox: {margin: theme.spacing(1), width: '20ch' },
   gnBox: {margin: theme.spacing(1), width: '35ch' },
   value: {margin: theme.spacing(1) },
-  inputImage: {width: '35ch', background: 'white'},
-  table: {minWidth: 350, },
+  table: {
+    minWidth: 350,
+  },
 }));
 
 export default function GroupData({ groups, setGroups }) {
@@ -46,24 +44,18 @@ export default function GroupData({ groups, setGroups }) {
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
-  const [fileError, setFileError] = useState(null);  
-  const [images, setImages] = useState([]);
-  const [imagesError, setImagesError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setCodeError(false);
     setNameError(false);
-    setImagesError(false);
     if (code == '' ) { setCodeError(true) }
     if (name == '' ) { setNameError(true) }
     if (code && name) { console.log(code,name); }
     if (code && name) { 
-      addGroup({"id":code, name, images});
+      addGroup({"id":code, name});
       setCode("");
       setName("");
-      setImages([]);
     }
   };
 
@@ -86,8 +78,7 @@ export default function GroupData({ groups, setGroups }) {
       .doc(newGroup.id)
       .set(newGroup)
       .then(() => {
-        // setGroups((prev) => [newGroup, ...prev]);
-        getGroups();
+        setGroups((prev) => [newGroup, ...prev]);
       })
       .catch((err) => {
         console.error(err);
@@ -113,28 +104,10 @@ export default function GroupData({ groups, setGroups }) {
     function editGroup(group) {
       setCode(group.id);
       setName(group.name);
-      // deleteGroup(group);
-      setImages(group.images);
-
+      deleteGroup(group);
     }
 
-    const types = ['image/png', 'image/jpeg'];
 
-    const handleAddPic = async (e) => {
-      const selected = e.target.files[0];
-      if (selected && types.includes(selected.type)) {
-        setFile(selected);
-        setFileError('');
-      } else {
-        setFile(null);
-        setFileError('Please select an image file (png or jpg)');
-      }
-    };
-
-    function preview(item) {}
-  
-    let i=1;
-  
     useEffect(() => {
       getGroups();
       //  eslint-disable-next-line
@@ -176,28 +149,7 @@ export default function GroupData({ groups, setGroups }) {
           error={nameError}
         />
 
-        <label>
-          <input type="file" onChange={handleAddPic} />
-          <span><AddAPhotoIcon /></span>
-        </label>
-
-        <div className="output">
-          { fileError && <div className="error">{ fileError }</div>}
-          { file && <div>{ file.name }</div> }
-          { file && <ProgressBar 
-            file={file} setFile={setFile} 
-            images={images} setImages={setImages}
-          /> }
-        </div>
-
-
-        <div>
-          <ImageGrid images={images} setImages={setImages} />
-        </div>
-
-
         <br/>
-
         <Button 
           className={classes.button}
           type="submit" 
